@@ -5,5 +5,6 @@
 	"path": false,
 	"beautifyOnSave": false,
 	"inlineComments": false,
-	"newlineBetweenSelectors": false
+	"newlineBetweenSelectors": false,
+	"indentStyle": "kandr"
 }
