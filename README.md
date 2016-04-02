@@ -87,7 +87,7 @@ The following settings can be adjusted:
   "borderZero": "ignore",
   // Omit length units on zero values
   "zeroUnit": false,
-  // Short-hand or long-form hexadecimal colors (possible values: "ignore", "zero", "none")
+  // Short-hand or long-form hexadecimal colors (possible values: "ignore", "long", "short")
   "hexLength": "ignore",
   // Indentation style (possible values: "kandr" and "allman")
   "indentStyle": "kandr"
