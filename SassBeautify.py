@@ -178,6 +178,10 @@ class SassBeautifyCommand(sublime_plugin.TextCommand):
         content = content.replace('"', '\'')
         return content
 
+    def remove_zero_unit(self, content):
+        content = re.sub(r'([ :]0) *(rem|vmin|vmax|px|em|ex|ch|vh|vw|vm|px|mm|cm|in|pt|pc|%)', r'\1', content)
+        return content
+
     def hex_length(self, content, option):
         if option == 'long':
             content = re.sub(re.compile(r'#([a-f0-9])([a-f0-9])([a-f0-9])([ ;])', re.I), r'#\1\1\2\2\3\3\4', content)
@@ -263,6 +267,10 @@ class SassBeautifyCommand(sublime_plugin.TextCommand):
 
         if self.settings.get('useSingleQuotes', False):
             output = self.use_single_quotes(output)
+
+        if self.settings.get('zeroUnit', False):
+            output = self.remove_zero_unit(output)
+
 
         output = self.hex_length(output, self.settings.get('hexLength', 'ignore'))
 
