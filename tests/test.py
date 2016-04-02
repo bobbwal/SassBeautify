@@ -278,3 +278,55 @@ class test_internal_function_beautify_semicolons(TestCase):
             };
 
             """))
+
+class test_internal_function_use_allman_style_indentation(TestCase):
+
+    #
+    def test_convert_from_kandr_to_allman(self):
+        beautified = SassBeautifyCommandInstance.use_allman_style_indentation(textwrap.dedent("""\
+
+            .ClassA,
+            .ClassB {
+                .ClassC {
+                    height: 14px;
+
+                    @mixin whistle($number-of-rows, $small-buttons){
+                        padding-top: 139px;
+                    }
+
+                    .ClassD
+                    {
+                        &[count='1'] {
+                            background-color: #black;
+                        }
+                    }
+                }
+            }
+
+            """))
+
+        self.assertEqual(beautified, textwrap.dedent("""\
+
+            .ClassA,
+            .ClassB
+            {
+                .ClassC
+                {
+                    height: 14px;
+
+                    @mixin whistle($number-of-rows, $small-buttons)
+                    {
+                        padding-top: 139px;
+                    }
+
+                    .ClassD
+                    {
+                        &[count='1']
+                        {
+                            background-color: #black;
+                        }
+                    }
+                }
+            }
+
+            """))

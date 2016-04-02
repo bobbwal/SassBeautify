@@ -80,9 +80,11 @@ The following settings can be adjusted:
   // Add a new line between selectors?
   "newlineBetweenSelectors": false,
   // Use single quotes everywhere
-  "useSingleQuotes": false
+  "useSingleQuotes": false,
   // Remove the leading zero for numeric values with a decimal point
-  "leadingZero": false
+  "leadingZero": false,
+  // Indentation style (possible values: "kandr" and "allman")
+  "indentStyle": "kandr"
 }
 ```
 
