@@ -83,6 +83,8 @@ The following settings can be adjusted:
   "useSingleQuotes": false,
   // Remove the leading zero for numeric values with a decimal point
   "leadingZero": false,
+  // Short-hand or long-form hexadecimal colors (possible values: "ignore", "zero", "none")
+  "hexLength": "ignore",
   // Indentation style (possible values: "kandr" and "allman")
   "indentStyle": "kandr"
 }

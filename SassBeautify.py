@@ -178,6 +178,14 @@ class SassBeautifyCommand(sublime_plugin.TextCommand):
         content = content.replace('"', '\'')
         return content
 
+    def hex_length(self, content, option):
+        if option == 'long':
+            content = re.sub(re.compile(r'#([a-f0-9])([a-f0-9])([a-f0-9])([ ;])', re.I), r'#\1\1\2\2\3\3\4', content)
+        elif option == 'short':
+            content = re.sub(re.compile(r'#([a-f0-9])\1([a-f0-9])\2([a-f0-9])\3', re.I), r'#\1\2\3', content)
+
+        return content
+
     def use_allman_style_indentation(self, content):
         def insert_newline_before_open_bracket(m):
             return m.group(1) + m.group(2) + '\n' + m.group(1) + '{'
@@ -255,6 +263,8 @@ class SassBeautifyCommand(sublime_plugin.TextCommand):
 
         if self.settings.get('useSingleQuotes', False):
             output = self.use_single_quotes(output)
+
+        output = self.hex_length(output, self.settings.get('hexLength', 'ignore'))
 
         if self.settings.get('indentStyle', 'kandr') == 'allman':
             output = self.use_allman_style_indentation(output)

@@ -7,5 +7,6 @@
 	"inlineComments": false,
 	"newlineBetweenSelectors": false,
 	"leadingZero": false,
+	"hexLength": "ignore",
 	"indentStyle": "kandr"
 }
