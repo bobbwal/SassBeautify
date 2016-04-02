@@ -235,3 +235,46 @@ class test_internal_function_remove_leading_zero(TestCase):
             }
 
             """))
+
+
+class test_internal_function_beautify_semicolons(TestCase):
+
+    # Check that we add ;s to the end of lines, except for comments, lines ending in commas, and lines before an open {
+    # all other cases where we might introduce a double semicolon or where a semicolon isn't needed are cleaned up by
+    # sass-convert so we don't need to worry about them here
+    def test_semicolons(self):
+        beautified = SassBeautifyCommandInstance.beautify_semicolons(textwrap.dedent("""\
+
+            // @import '_common';
+            @import "_colors"
+
+            //TODO: eat pizza
+            //      and other things
+
+            .ClassA,
+            .ClassB
+            {
+                height: 14px
+                font-size: 2em;
+                margin: -3px 0 !important
+            }
+
+            """))
+
+        self.assertEqual(beautified, textwrap.dedent("""\
+
+            // @import '_common';
+            @import "_colors";
+            ;
+            //TODO: eat pizza
+            //      and other things
+            ;
+            .ClassA,
+            .ClassB
+            {;
+                height: 14px;
+                font-size: 2em;;
+                margin: -3px 0 !important;
+            };
+
+            """))
