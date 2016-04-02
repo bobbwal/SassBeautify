@@ -173,9 +173,13 @@ class SassBeautifyCommand(sublime_plugin.TextCommand):
         content = re.sub(re.compile('(;.*|}.*)(\n +//.*\n.+[{,])$', re.MULTILINE), insert_newline_between_capturing_parentheses, content)
 
         return content
-        
+
     def use_single_quotes(self, content):
         content = content.replace('"', '\'')
+        return content
+
+    def remove_zero_unit(self, content):
+        content = re.sub(r'([ :]0) *(rem|vmin|vmax|px|em|ex|ch|vh|vw|vm|px|mm|cm|in|pt|pc|%)', r'\1', content)
         return content
 
     def check_thread(self, thread, i=0, dir=1):
@@ -229,9 +233,13 @@ class SassBeautifyCommand(sublime_plugin.TextCommand):
 
         if self.settings.get('newlineBetweenSelectors', False):
             output = self.beautify_newlines(output)
-        
+
         if self.settings.get('useSingleQuotes', False):
             output = self.use_single_quotes(output)
+
+        if self.settings.get('zeroUnit', False):
+            output = self.remove_zero_unit(output)
+
 
         self.viewport_pos = self.view.viewport_position()
         self.selection = self.view.sel()[0]

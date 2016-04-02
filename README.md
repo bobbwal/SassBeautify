@@ -80,7 +80,9 @@ The following settings can be adjusted:
   // Add a new line between selectors?
   "newlineBetweenSelectors": false,
   // Use single quotes everywhere
-  "useSingleQuotes": false
+  "useSingleQuotes": false,
+  // Omit length units on zero values
+  "zeroUnit": false
 }
 ```
 
@@ -102,7 +104,7 @@ In your keymap file (Preferences >> Key bindings - User), add a custom key bindi
 
 ## Issues with ruby, Sass and your PATH
 
-If you installed ruby and sass via a version manager tool like [RVM](https://rvm.io/), [rbenv](https://github.com/sstephenson/rbenv) or via an installer like [ruby installer](http://rubyinstaller.org/), then you're likely to encounter issues with running `sass-convert` from Sublime Text. 
+If you installed ruby and sass via a version manager tool like [RVM](https://rvm.io/), [rbenv](https://github.com/sstephenson/rbenv) or via an installer like [ruby installer](http://rubyinstaller.org/), then you're likely to encounter issues with running `sass-convert` from Sublime Text.
 
 ### Compatibility with RVM/rbenv
 
@@ -128,7 +130,7 @@ Please [create an issue](https://github.com/badsyntax/SassBeautify/issues) if yo
 
 ## Thanks
 
-Thanks to the [contributors](https://github.com/badsyntax/SassBeautify/graphs/contributors) and to all the people 
+Thanks to the [contributors](https://github.com/badsyntax/SassBeautify/graphs/contributors) and to all the people
 who have tested and reported issues.
 
 ## License

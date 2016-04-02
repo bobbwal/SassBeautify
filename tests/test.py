@@ -211,3 +211,26 @@ class test_internal_function_beautify_newlines(TestCase):
             }
 
             """))
+
+class test_internal_function_remove_zero_unit(self, content):
+
+    def test_remove_zero_unit(self, content):
+        beautified = SassBeautifyCommandInstance.remove_zero_unit(textwrap.dedent("""\
+
+            border: 0px;
+            border: 0;
+            border: 0em;
+            border:0vmax;
+            border: 0s;
+
+            """))
+
+        self.assertEqual(beautified, textwrap.dedent("""\
+
+            border: 0;
+            border: 0;
+            border: 0;
+            border:0;
+            border: 0s;
+
+            """))
