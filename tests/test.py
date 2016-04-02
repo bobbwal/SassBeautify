@@ -211,3 +211,56 @@ class test_internal_function_beautify_newlines(TestCase):
             }
 
             """))
+
+class test_internal_function_hex_length(TestCase):
+
+    def test_short(self):
+        beautified = SassBeautifyCommandInstance.hex_length(textwrap.dedent("""\
+
+            background-color: #000;
+            background-color: #Aa44dd;
+            background-color: #aa44gg;
+
+            """), 'short')
+
+        self.assertEqual(beautified, textwrap.dedent("""\
+
+            background-color: #000;
+            background-color: #A4d;
+            background-color: #aa44gg;
+
+            """))
+
+    def test_long(self):
+        beautified = SassBeautifyCommandInstance.hex_length(textwrap.dedent("""\
+
+            background-color: #A4d;
+            background-color: #aa44ff;
+            background-color: #aa44gg;
+
+            """), 'long')
+
+        self.assertEqual(beautified, textwrap.dedent("""\
+
+            background-color: #AA44dd;
+            background-color: #aa44ff;
+            background-color: #aa44gg;
+
+            """))
+
+    def test_ignore(self):
+        beautified = SassBeautifyCommandInstance.hex_length(textwrap.dedent("""\
+
+            background-color: #000;
+            background-color: #Aa44dd;
+            background-color: #aa44gg;
+
+            """), 'ignore')
+
+        self.assertEqual(beautified, textwrap.dedent("""\
+
+            background-color: #000;
+            background-color: #Aa44dd;
+            background-color: #aa44gg;
+
+            """))
