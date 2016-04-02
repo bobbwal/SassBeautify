@@ -83,6 +83,8 @@ The following settings can be adjusted:
   "useSingleQuotes": false,
   // Remove the leading zero for numeric values with a decimal point
   "leadingZero": false,
+  // Determine how border looks when it is none/zero. (possible values: "ignore", "zero", "none")
+  "borderZero": "ignore",
   // Omit length units on zero values
   "zeroUnit": false,
   // Short-hand or long-form hexadecimal colors (possible values: "ignore", "zero", "none")

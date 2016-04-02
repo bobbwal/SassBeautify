@@ -178,6 +178,14 @@ class SassBeautifyCommand(sublime_plugin.TextCommand):
         content = content.replace('"', '\'')
         return content
 
+    def border_zero(self, content, option):
+        if option == 'zero':
+            content = re.sub(re.compile('(border *: *none)'), 'border: 0', content)
+        elif option == 'none':
+            content = re.sub(re.compile('(border *: *0)'), 'border: none', content)
+
+        return content
+
     def remove_zero_unit(self, content):
         content = re.sub(r'([ :]0) *(rem|vmin|vmax|px|em|ex|ch|vh|vw|vm|px|mm|cm|in|pt|pc|%)', r'\1', content)
         return content
@@ -267,6 +275,8 @@ class SassBeautifyCommand(sublime_plugin.TextCommand):
 
         if self.settings.get('useSingleQuotes', False):
             output = self.use_single_quotes(output)
+
+        output = self.border_zero(output, self.settings.get('borderZero', 'ignore'))
 
         if self.settings.get('zeroUnit', False):
             output = self.remove_zero_unit(output)

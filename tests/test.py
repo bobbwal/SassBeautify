@@ -406,3 +406,46 @@ class test_internal_function_remove_zero_unit(self, content):
             border: 0s;
 
             """))
+
+class test_internal_function_border_zero(TestCase):
+
+    def test_zero(self):
+        beautified = SassBeautifyCommandInstance.border_zero(textwrap.dedent("""\
+
+            border  :   none;
+
+            """), "zero")
+
+        self.assertEqual(beautified, textwrap.dedent("""\
+
+            border: 0;
+
+            """))
+
+    def test_none(self):
+        beautified = SassBeautifyCommandInstance.border_zero(textwrap.dedent("""\
+
+            border: 0;
+
+            """), "none")
+
+        self.assertEqual(beautified, textwrap.dedent("""\
+
+            border: none;
+
+            """))
+
+    def test_ignore(self):
+        beautified = SassBeautifyCommandInstance.border_zero(textwrap.dedent("""\
+
+            border: none;
+            border: 0;
+
+            """), "ignore")
+
+        self.assertEqual(beautified, textwrap.dedent("""\
+
+            border: none;
+            border: 0;
+
+            """))
