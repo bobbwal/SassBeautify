@@ -173,9 +173,22 @@ class SassBeautifyCommand(sublime_plugin.TextCommand):
         content = re.sub(re.compile('(;.*|}.*)(\n +//.*\n.+[{,])$', re.MULTILINE), insert_newline_between_capturing_parentheses, content)
 
         return content
-        
+
     def use_single_quotes(self, content):
         content = content.replace('"', '\'')
+        return content
+
+    def beautify_semicolons(self, content):
+        '''
+        Appends a semicolon to the lines missing one
+        '''
+        def remove_semicolon_from_end_of_comment(m):
+            return m.group(1) + m.group(2)
+
+        content = re.sub(re.compile('(?<!,)$', re.MULTILINE), ';', content) # add ; to all lines not ending in ,
+        content = re.sub(re.compile(';(?=$\s*\{)', re.MULTILINE), '', content) # remove ; if next line starts with {
+        content = re.sub(re.compile('(//|/\\*)(.*);$', re.MULTILINE), remove_semicolon_from_end_of_comment, content) # remove ; if at end of comment
+        # sass-convert removes all other cases of extra ;s, so don't worry about them here
         return content
 
     def check_thread(self, thread, i=0, dir=1):
@@ -229,7 +242,7 @@ class SassBeautifyCommand(sublime_plugin.TextCommand):
 
         if self.settings.get('newlineBetweenSelectors', False):
             output = self.beautify_newlines(output)
-        
+
         if self.settings.get('useSingleQuotes', False):
             output = self.use_single_quotes(output)
 
@@ -309,6 +322,8 @@ class SassBeautifyCommand(sublime_plugin.TextCommand):
         Gets the sass text from the Sublime view.
         '''
         content = self.view.substr(sublime.Region(0, self.view.size()))
+
+        content = self.beautify_semicolons(content)
 
         if self.settings.get('inlineComments', False):
             '''
