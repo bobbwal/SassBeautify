@@ -172,7 +172,6 @@ class SassBeautifyCommand(sublime_plugin.TextCommand):
             return m.group(1) + '\n' + m.group(2)
 
         def remove_extra_line_before_closing_bracket(m):
-            print("made it!")
             return m.group(1) + m.group(3)
 
         # Insert newline after "}" or ";" if the line after defines (or starts to define) a selector
