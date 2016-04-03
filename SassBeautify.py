@@ -160,6 +160,10 @@ class SassBeautifyCommand(sublime_plugin.TextCommand):
         def insert_newline_between_capturing_parentheses(m):
             return m.group(1) + '\n' + m.group(2)
 
+        def remove_extra_line_before_closing_bracket(m):
+            print("made it!")
+            return m.group(1) + m.group(3)
+
         # Insert newline after "}" or ";" if the line after defines (or starts to define) a selector
         # (i.e. contains some characters followed by a "{" or "," on the same line).
         # This is in order to make the selector more visible and increase readability
@@ -172,8 +176,11 @@ class SassBeautifyCommand(sublime_plugin.TextCommand):
         # Similar to above, except the next line is a commented out line followed by a selector
         content = re.sub(re.compile('(;.*|}.*)(\n +//.*\n.+[{,])$', re.MULTILINE), insert_newline_between_capturing_parentheses, content)
 
+        # clean up new lines added after an end of line comment and before a }
+        content = re.sub(re.compile(r'(//.*\n)([ \t]*\n)([ \t]*})', re.MULTILINE), remove_extra_line_before_closing_bracket, content)
+
         return content
-        
+
     def use_single_quotes(self, content):
         content = content.replace('"', '\'')
         return content
@@ -229,7 +236,7 @@ class SassBeautifyCommand(sublime_plugin.TextCommand):
 
         if self.settings.get('newlineBetweenSelectors', False):
             output = self.beautify_newlines(output)
-        
+
         if self.settings.get('useSingleQuotes', False):
             output = self.use_single_quotes(output)
 
