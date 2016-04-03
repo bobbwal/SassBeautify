@@ -233,6 +233,10 @@ class test_internal_function_use_allman_style_indentation(TestCase):
                             background-color: #black;
                         }
                     }
+
+                    p {
+                        font-size: 10px;
+                    }
                 }
             }
 
@@ -258,6 +262,11 @@ class test_internal_function_use_allman_style_indentation(TestCase):
                         {
                             background-color: #black;
                         }
+                    }
+
+                    p
+                    {
+                        font-size: 10px;
                     }
                 }
             }
