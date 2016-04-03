@@ -77,6 +77,11 @@ class SassBeautifyEvents(sublime_plugin.EventListener):
         '''
         settings = sublime.load_settings('SassBeautify.sublime-settings')
         beautify_on_save = settings.get('beautifyOnSave', False)
+        project_data = sublime.active_window().project_data()
+        if project_data:
+            project_settings = project_data.get('SassBeautify', {})
+            if 'beautifyOnSave' in project_settings:
+                beautify_on_save = project_settings['beautifyOnSave']
 
         if not SassBeautifyCommand.saving and beautify_on_save:
             view.run_command('sass_beautify', {
@@ -100,6 +105,12 @@ class SassBeautifyCommand(sublime_plugin.TextCommand):
         self.convert_from_type = convert_from_type
         self.settings = sublime.load_settings('SassBeautify.sublime-settings')
         self.show_errors = show_errors
+
+        project_data = sublime.active_window().project_data()
+        if project_data:
+            project_settings = project_data.get('SassBeautify', {})
+            for k,v in project_settings.items():
+                self.settings.set(k, v)
 
         if self.check_file():
             self.beautify()
