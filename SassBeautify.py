@@ -77,6 +77,11 @@ class SassBeautifyEvents(sublime_plugin.EventListener):
         '''
         settings = sublime.load_settings('SassBeautify.sublime-settings')
         beautify_on_save = settings.get('beautifyOnSave', False)
+        project_data = sublime.active_window().project_data()
+        if project_data:
+            project_settings = project_data.get('SassBeautify', {})
+            if 'beautifyOnSave' in project_settings:
+                beautify_on_save = project_settings['beautifyOnSave']
 
         if not SassBeautifyCommand.saving and beautify_on_save:
             view.run_command('sass_beautify', {
@@ -100,6 +105,12 @@ class SassBeautifyCommand(sublime_plugin.TextCommand):
         self.convert_from_type = convert_from_type
         self.settings = sublime.load_settings('SassBeautify.sublime-settings')
         self.show_errors = show_errors
+
+        project_data = sublime.active_window().project_data()
+        if project_data:
+            project_settings = project_data.get('SassBeautify', {})
+            for k,v in project_settings.items():
+                self.settings.set(k, v)
 
         if self.check_file():
             self.beautify()
@@ -173,7 +184,7 @@ class SassBeautifyCommand(sublime_plugin.TextCommand):
         content = re.sub(re.compile('(;.*|}.*)(\n +//.*\n.+[{,])$', re.MULTILINE), insert_newline_between_capturing_parentheses, content)
 
         return content
-        
+
     def use_single_quotes(self, content):
         content = content.replace('"', '\'')
         return content
@@ -229,7 +240,7 @@ class SassBeautifyCommand(sublime_plugin.TextCommand):
 
         if self.settings.get('newlineBetweenSelectors', False):
             output = self.beautify_newlines(output)
-        
+
         if self.settings.get('useSingleQuotes', False):
             output = self.use_single_quotes(output)
 
