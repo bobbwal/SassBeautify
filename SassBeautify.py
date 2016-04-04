@@ -219,7 +219,7 @@ class SassBeautifyCommand(sublime_plugin.TextCommand):
         def insert_newline_before_open_bracket(m):
             return m.group(1) + m.group(2) + '\n' + m.group(1) + '{'
 
-        content = re.sub(re.compile('([ \t]*)(\S.*[\])\w]? *){$', re.MULTILINE), insert_newline_before_open_bracket, content)
+        content = re.sub(re.compile('([ \t]*)((?!/)\S.*[\])\w]? *){$', re.MULTILINE), insert_newline_before_open_bracket, content)
         return content
 
     def remove_leading_zero(self, content):
