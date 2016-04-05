@@ -392,9 +392,9 @@ class test_internal_function_hex_length(TestCase):
 
             """))
 
-class test_internal_function_remove_zero_unit(self, content):
+class test_internal_function_remove_zero_unit(TestCase):
 
-    def test_remove_zero_unit(self, content):
+    def test_remove_zero_unit(self):
         beautified = SassBeautifyCommandInstance.remove_zero_unit(textwrap.dedent("""\
 
             border: 0px;
