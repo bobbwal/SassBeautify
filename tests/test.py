@@ -237,7 +237,7 @@ class test_internal_function_beautify_semicolons(TestCase):
             """))
 
         self.assertEqual(beautified, textwrap.dedent("""\
-
+            ;
             // @import '_common';
             @import "_colors";
             ;
@@ -251,5 +251,5 @@ class test_internal_function_beautify_semicolons(TestCase):
                 font-size: 2em;;
                 margin: -3px 0 !important;
             };
-
-            """))
+            ;
+            ;"""))
