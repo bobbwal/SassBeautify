@@ -211,3 +211,27 @@ class test_internal_function_beautify_newlines(TestCase):
             }
 
             """))
+
+class test_internal_function_remove_leading_zero(TestCase):
+
+    # check that leading zeros are removed properly
+    def test_leading_zero(self):
+        beautified = SassBeautifyCommandInstance.remove_leading_zero(textwrap.dedent("""\
+
+            .ClassA {
+                -webkit-transform: scale(0.9);
+                transition: -webkit-transform 0.1s;
+                background-color: rgba(67, 67, 67, 0.5);
+            }
+
+            """))
+
+        self.assertEqual(beautified, textwrap.dedent("""\
+
+            .ClassA {
+                -webkit-transform: scale(.9);
+                transition: -webkit-transform .1s;
+                background-color: rgba(67, 67, 67, .5);
+            }
+
+            """))
